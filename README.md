@@ -205,7 +205,7 @@ Clone repository.
 	$ cd /var/www/catalog
 	$ sudo git clone https://github.com/your_git_username/repo_name.git catalog
 
-Create `__init__.py` that will contain the `Flask` app logic.
+Create `__init__.py` that will contain the [Flask](http://flask.pocoo.org/) app logic.
 
 	$ sudo nano $ cd /var/www/catalog/catalog __init__.py
 
@@ -215,8 +215,10 @@ Make `git` unaccessable from browser. In your git folder create `.htaccess` file
 
 Save it with:
 
-> Order allow, deny
-> Deny from all
+	```
+	Order allow, deny
+	Deny from all
+	```
 	
 ## 4. Setup [Apache](http://httpd.apache.org/)
 
@@ -226,8 +228,36 @@ Install Apache2
 
 Open your browser and visit your server ip `http://ip` If all went well, you'll see a greeting.
 
+Install [mod_wsgi](https://pypi.python.org/pypi/mod_wsgi) for serving Python app via Apache.
 
+	$ sudo apt-get install python-setuptools libapache2-mod-wsgi
 
+Restart Apache.
+
+	$ sudo service apache2 restart
+	
+Get additional package to serve Flask
+
+	$ sudo apt-get install libapache2-mod-wsgi python-dev
+
+Enable mod-wsgi
+
+	$ sudo a2enmod wsgi
+	
+## 5.Install Flask
+
+Install pip.
+
+	$ sudo apt-get install python-pip
+
+Install virtual environment.
+
+	$ sudo pip install virtualenv
+	
+> If you have error `locale.Error.unsupported locale setting`, run
+
+	$ export LC_ALL=C
+	
 
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
