@@ -47,26 +47,20 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 
 ### Connect to your server via Amazon terminal and update all currently installed packages.
 
-	```
 	$ sudo apt-get update
 	$ sudo apt-get updrade
-	```
 	
 Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 	
-	```
 	$ sudo nano /home/your_username/.ssh/ssh_config
-	```
-	
+		
 Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
 	
-	```
 	$ ufw allow 2200/tcp
 	$ ufw allow 80/tcp
 	$ ufw allow 123/tcp
 	$ ufw enable	
-	```
-	
+		
 > *Warning*: When changing the SSH port, make sure that the firewall is open for port 2200 first, so that you don't lock yourself out of the server. 
 > When you change the SSH port, the Lightsail instance will no longer be accessible through the web app 'Connect using SSH' button. 
 > The button assumes the default port is being used. There are instructions on the same page for connecting from your terminal to the instance. 
