@@ -9,7 +9,8 @@ Currently the app is running on [http://35.159.1.90/](http://35.159.1.90/).
 
 ## Setup Amazon Lightsail instance
 
-### First, log in to Lightsail. If you don't already have an [Amazon Web Services]((https://portal.aws.amazon.com/billing/signup). ) 
+### First, log in to Lightsail. 
+If you don't already have an [Amazon Web Services](https://portal.aws.amazon.com/billing/signup) 
 account, you'll be prompted to create one.
 
 ### Create an instance.
@@ -41,7 +42,6 @@ Lightsail firewall and other settings.
 
 When you SSH in, you'll be logged as the ubuntu user. When you want to execute commands as `root`, you'll need to use the `sudo` command to do it.
 
-
 ## Setup your new Linux Server
 
 
@@ -52,13 +52,13 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 	$ sudo apt-get updrade
 	```
 	
-	Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
+Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 	
 	```
 	$ sudo nano /home/your_username/.ssh/ssh_config
 	```
 	
-	Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
+Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
 	
 	```
 	$ ufw allow 2200/tcp
@@ -74,13 +74,13 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 Download Lightsail default key from your account page.
 
 Create folder and save the key content.
-	```
+	
 	$ mkdir /home/your_username/.ssh/lightsailkey
-	```
+	
 Generate new key pair on your *LOCAL* machine.
-	```
+	
 	$ ssh keygen
-	```
+	
 Change the permissions to secure the key.
 
 	$ chmod 700 key
