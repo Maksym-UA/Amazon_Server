@@ -44,8 +44,7 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 
 ## 1. Setup your new Linux Server
 
-
-### Connect to your server via Amazon terminal and update all currently installed packages.
+Connect to your server via Amazon terminal and update all currently installed packages.
 
 	$ sudo apt-get update
 	$ sudo apt-get updrade
@@ -139,9 +138,35 @@ Check time.
 	
 ## 2. Setup PostgreSQL
 
+Install PostgreSQL with extra packages
 
+	$ sudo apt-get install postgresql postgresql-contrib
+	
+Switch to postgres acount
 
+	$ sudo su - postgres
 
+To run SQL commands type
+
+	$ psql
+
+To exit this mode type
+
+	# `\q` or `exit`
+
+Configure remote access to postgres
+
+	$ sudo nano /etc/postgresql/9.5/pg-hba.conf
+	
+Add database user (role)
+
+	$ sudo su -postgres
+	$ create user catalog with password catalog;
+	
+Check existing roles
+
+	$ postgres@@35.159.1.90:~$ psql
+	postgres=# \du
 
 
 
