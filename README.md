@@ -87,8 +87,8 @@ Read content on local machine and copy it.
 	$ cat .ssh/key.pub
 	
 Connect to the server from your terminal.
-
-	$ ssh -i ~/.ssh/key -p2200 ubuntu@35.159.1.90
+	
+	$ ssh -i ~/.ssh/key.pem -p2200 ubuntu@35.159.1.90
 	
 Create a new user account named `grader`.
 
@@ -124,7 +124,7 @@ Press `CTRL + D` to exit `grader` user.
 
 Now you can connect to the server as grader user.
 
-	$ ssh -i ~/.ssh/key -p2200 grader@35.159.1.90
+	$ ssh -i ~/.ssh/key.pem -p2200 grader@35.159.1.90
 	
 Press `CTRL + D` to close connection.
 
@@ -136,7 +136,7 @@ Check time.
 
 	$ date
 	
-## 2. Setup PostgreSQL
+## 2. Setup [PostgreSQL](https://www.postgresql.org/)
 
 Install PostgreSQL with extra packages.
 
@@ -184,7 +184,7 @@ Only let catalog permission to create tables.
 	postgres=# GRANT ALL ON SCHEMA public TO catalog;
 
 	
-## 3. Install GIT to server
+## 3. Install [GIT](https://github.com/) on server
 
 	$ sudo apt-get install git
 	
@@ -195,6 +195,40 @@ Set name.
 Set email.
 
 	$ git config --global user.email "your_git_email"
+	
+Create folder for git catalog.
+
+	$ sudo mkdir catalog
+	
+Clone repository.
+
+	$ cd /var/www/catalog
+	$ sudo git clone https://github.com/your_git_username/repo_name.git catalog
+
+Create `__init__.py` that will contain the `Flask` app logic.
+
+	$ sudo nano $ cd /var/www/catalog/catalog __init__.py
+
+Make `git` unaccessable from browser. In your git folder create `.htaccess` file.
+
+	$ sudo nano .htaccess
+
+Save it with:
+
+> Order allow, deny
+> Deny from all
+	
+## 4. Setup [Apache](http://httpd.apache.org/)
+
+Install Apache2
+
+	$ sudo apt-get install apache2
+
+Open your browser and visit your server ip `http://ip` If all went well, you'll see a greeting.
+
+
+
+
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
