@@ -45,25 +45,100 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 ## Setup your new Linux Server
 
 
-### Connect to your server and update all currently installed packages.
-	
+### Connect to your server via Amazon terminal and update all currently installed packages.
+
+	```
 	$ sudo apt-get update
 	$ sudo apt-get updrade
+	```
 	
 	Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 	
-	$ sudo nano ssh_config
+	```
+	$ sudo nano /home/your_username/.ssh/ssh_config
+	```
 	
 	Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
 	
+	```
 	$ ufw allow 2200/tcp
 	$ ufw allow 80/tcp
 	$ ufw allow 123/tcp
 	$ ufw enable	
-
+	```
+	
 > *Warning*: When changing the SSH port, make sure that the firewall is open for port 2200 first, so that you don't lock yourself out of the server. 
 > When you change the SSH port, the Lightsail instance will no longer be accessible through the web app 'Connect using SSH' button. 
 > The button assumes the default port is being used. There are instructions on the same page for connecting from your terminal to the instance. 
+
+Download Lightsail default key from your account page.
+
+Create folder and save the key content.
+	```
+	$ mkdir /home/your_username/.ssh/lightsailkey
+	```
+Generate new key pair on your *LOCAL* machine.
+	```
+	$ ssh keygen
+	```
+Change the permissions to secure the key.
+
+	$ chmod 700 key
+	
+Read content on local machine and copy it
+
+	$ cat .ssh/key.pub
+	
+Connect to the server from your terminal
+
+	$ ssh -i ~/.ssh/key -p2200 ubuntu@35.159.1.90
+	
+Create a new user account named `grader`.
+
+	$ sudo adduser grader
+	
+Give grader the permission to sudo.
+
+	$ usermod -aG sudo grader
+	
+Connect to grader user
+
+	$ sudo su -grader
+	
+
+Create an SSH key pair for grader and secure it.
+
+	$ mkdir .ssh
+	$ chmod 700 .ssh
+	$ touch .ssh/authorized_keys
+	$ chmod 600 .ssh/authorized_keys
+	
+Open authorized_keys
+
+	$ sudo nano .ssh/authorized_keys
+	
+Paste key content.
+
+Restart ssh service
+
+	$ sudo service ssh restart
+
+Press `CTRL + D` to exit `grader` user.
+
+Now you can connect to the server as grader user.
+
+	$ ssh -i ~/.ssh/key -p2200 grader@35.159.1.90
+	
+Press `CTRL + D` to close connection.
+
+	
+
+
+
+
+
+
+
 
 
 
