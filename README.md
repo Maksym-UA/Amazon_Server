@@ -42,7 +42,7 @@ Lightsail firewall and other settings.
 
 When you SSH in, you'll be logged as the ubuntu user. When you want to execute commands as `root`, you'll need to use the `sudo` command to do it.
 
-## Setup your new Linux Server
+## 1. Setup your new Linux Server
 
 
 ### Connect to your server via Amazon terminal and update all currently installed packages.
@@ -75,9 +75,13 @@ Generate new key pair on your *LOCAL* machine.
 	
 	$ ssh keygen
 	
-Change the permissions to secure the key.
+Change the permissions to secure the key folder.
 
 	$ chmod 700 key
+	
+Change the permissions to secure the key.
+	
+	$ chmod 600 .ssh/authorized_keys
 	
 Read content on local machine and copy it
 
@@ -113,7 +117,7 @@ Open authorized_keys
 	
 Paste key content.
 
-Restart ssh service
+Restart ssh service.
 
 	$ sudo service ssh restart
 
@@ -125,8 +129,15 @@ Now you can connect to the server as grader user.
 	
 Press `CTRL + D` to close connection.
 
-	
+Set your machine to UTC.
 
+	$ sudo timedatectl set-timezone UTC
+
+Check time.
+
+	$ date
+	
+## 2. Setup PostgreSQL
 
 
 
