@@ -82,11 +82,11 @@ Change the permissions to secure the key.
 	
 	$ chmod 600 .ssh/authorized_keys
 	
-Read content on local machine and copy it
+Read content on local machine and copy it.
 
 	$ cat .ssh/key.pub
 	
-Connect to the server from your terminal
+Connect to the server from your terminal.
 
 	$ ssh -i ~/.ssh/key -p2200 ubuntu@35.159.1.90
 	
@@ -98,7 +98,7 @@ Give grader the permission to sudo.
 
 	$ usermod -aG sudo grader
 	
-Connect to grader user
+Connect to grader user.
 
 	$ sudo su -grader
 	
@@ -138,39 +138,63 @@ Check time.
 	
 ## 2. Setup PostgreSQL
 
-Install PostgreSQL with extra packages
+Install PostgreSQL with extra packages.
 
 	$ sudo apt-get install postgresql postgresql-contrib
 	
-Switch to postgres acount
+Switch to postgres acount.
 
 	$ sudo su - postgres
 
-To run SQL commands type
+To run SQL commands type.
 
 	$ psql
 
-To exit this mode type
+To exit this mode type.
 
 	# `\q` or `exit`
 
-Configure remote access to postgres
+Configure remote access to postgres.
 
 	$ sudo nano /etc/postgresql/9.5/pg-hba.conf
 	
-Add database user (role)
+Add database user (role).
 
 	$ sudo su -postgres
 	$ create user catalog with password catalog;
 	
-Check existing roles
+Check existing roles.
 
-	$ postgres@@35.159.1.90:~$ psql
+	$ postgres@35.159.1.90:~$ psql
 	postgres=# \du
 
+Create database.
 
+	postgres=# CREATE DATABASE catalog WITH OWNER catalog;
 
+To connect to DB type
 
+	postgres=# \c catalog
+
+Press `q` to disconnect.
+
+Only let catalog permission to create tables.
+	
+	postgres=# REVOKE ALL ON SCHEMA catalog FROM public;
+	postgres=# GRANT ALL ON SCHEMA public TO catalog;
+
+	
+## 3. Install GIT to server
+
+	$ sudo apt-get install git
+	
+Set name.
+
+	$ git config --global user.name "your_git_username"
+	
+Set email.
+
+	$ git config --global user.email "your_git_email"
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
