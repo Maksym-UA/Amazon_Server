@@ -7,10 +7,9 @@ The project is running on [Amazon Lightsail](https://portal.aws.amazon.com/billi
 Currently the app is running on [http://35.159.1.90/](http://35.159.1.90/).
 
 
-## SETUP
+## Setup Amazon Lightsail instance
 
-### Amazon Lightsail instance
-First, log in to Lightsail. If you don't already have an [Amazon Web Services]((https://portal.aws.amazon.com/billing/signup). ) 
+### First, log in to Lightsail. If you don't already have an [Amazon Web Services]((https://portal.aws.amazon.com/billing/signup). ) 
 account, you'll be prompted to create one.
 
 ### Create an instance.
@@ -37,10 +36,36 @@ It may take a few minutes for your instance to start up.
 
 ### It's running.
 Once your instance has started up, you can log into it with SSH from your browser.
-The public IP address of the instance is displayed along with its name. In the above picture it's 35.159.1.90. 
-Explore the other tabs of the user interface to find the Lightsail firewall and other settings. 
+The public IP address of the instance is displayed along with its name. Explore the other tabs of the user interface to find the 
+Lightsail firewall and other settings. 
 
 When you SSH in, you'll be logged as the ubuntu user. When you want to execute commands as `root`, you'll need to use the `sudo` command to do it.
+
+
+## Setup your new Linux Server
+
+
+### Connect to your server and update all currently installed packages.
+	
+	$ sudo apt-get update
+	$ sudo apt-get updrade
+	
+	Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
+	
+	$ sudo nano ssh_config
+	
+	Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
+	
+	$ ufw allow 2200/tcp
+	$ ufw allow 80/tcp
+	$ ufw allow 123/tcp
+	$ ufw enable	
+
+> *Warning*: When changing the SSH port, make sure that the firewall is open for port 2200 first, so that you don't lock yourself out of the server. 
+> When you change the SSH port, the Lightsail instance will no longer be accessible through the web app 'Connect using SSH' button. 
+> The button assumes the default port is being used. There are instructions on the same page for connecting from your terminal to the instance. 
+
+
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
