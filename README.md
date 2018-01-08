@@ -141,7 +141,7 @@ Install PostgreSQL with extra packages.
 
 	$ sudo apt-get install postgresql postgresql-contrib
 	
-Switch to postgres acount.
+Switch to postgres account.
 
 	$ sudo su - postgres
 
@@ -199,7 +199,7 @@ Create folder for git catalog.
 
 	$ sudo mkdir catalog
 	
-Clone repository.
+Clone the repository.
 ```
 $ cd /var/www/catalog
 $ sudo git clone https://github.com/your_git_username/repo_name.git catalog
