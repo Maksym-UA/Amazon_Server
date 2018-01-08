@@ -102,7 +102,6 @@ Connect to grader user.
 
 	$ sudo su -grader
 	
-
 Create an SSH key pair for grader and secure it.
 
 	$ mkdir .ssh
@@ -182,7 +181,6 @@ Only let catalog permission to create tables.
 	
 	postgres=# REVOKE ALL ON SCHEMA catalog FROM public;
 	postgres=# GRANT ALL ON SCHEMA public TO catalog;
-
 	
 ## 3. Install [GIT](https://github.com/) on server
 
@@ -215,10 +213,10 @@ Make `git` unaccessable from browser. In your git folder create `.htaccess` file
 
 Save it with:
 
-	```
-	Order allow, deny
-	Deny from all
-	```
+```
+Order allow, deny
+Deny from all
+```
 	
 ## 4. Setup [Apache](http://httpd.apache.org/)
 
@@ -244,7 +242,7 @@ Enable mod-wsgi
 
 	$ sudo a2enmod wsgi
 	
-## 5.Install Flask
+## 5. Install Flask
 
 Install pip.
 
@@ -258,7 +256,98 @@ Install virtual environment.
 
 	$ export LC_ALL=C
 	
+Create virtual environment in the last catalog folder.
+	
+	$ sudo virutalenv catalogenv
+	
+Activate the environment.
 
+	$ source catalog/bin/activate
+	
+Install Flask.
+
+	$ sudo pip install Glask
+	
+Test your installtion.
+
+	$ sudo python __init__.py
+	
+You should see:
+
+> Running on http://localhost:5000/ or  http://localhost:127.0.0.1:5000/
+
+Deactivate the environment.
+
+	$ deactivate
+	
+Configure and enable Virtual Host
+
+	$ sudo nano /etc/apache2/sites_available/catalog.conf
+
+Add the following:
+```
+<VirtualHost *:80>
+	ServerName domain or cloud server's IP
+	ServerAdmin admin@yourwebsite.com or IP
+	WSGIscriptAlias / /var/www/catalog/catalog.wsgi
+	<Directory /var/www/catalog/catalog/>
+		Order allow,deny
+		Allow from all
+	</Directory>
+	Alias /static /var/www/catalog/catalog/static
+	<Directory /var/www/catalog/catalog/static/>
+		Order allow,deny
+		Allow from all
+	</Directory>
+	Errorlog ${APACHE_LOG_DIR}/error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+Enable virtual host.
+
+	$ sudo a2ensite catalog
+	
+Create .wsgi file in app directory.
+
+	$ cd /var/www/catalog
+	$ sudo nano catalog .wsgi
+	
+Add the following:
+
+```
+#!/usr/bin/python
+import system
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/catalog/")
+from catalog import app as application
+application.secret_key = 'your_secret_ key'
+```
+
+Restart Apache.
+
+	$ sudo service apache2 restart
+	
+Enable all permissions to virtual environment.
+
+	$ sudo chmod -R 777 catalogenv
+	
+Run the environment.
+	
+	$ source catalogenv /bin/activate
+	
+Install [http2](https://hyper.readthedocs.io/en/latest/quickstart.html#installing-hyper)
+
+	$ pip install httplib2
+	
+Install [SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.1/)
+		
+	$ pip install sqlalchemy
+	
+Install [requests](http://docs.python-requests.org/en/master/)
+
+	$ pip install requests
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
