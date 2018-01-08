@@ -45,21 +45,21 @@ When you SSH in, you'll be logged as the ubuntu user. When you want to execute c
 ## 1. Setup your new Linux Server
 
 Connect to your server via Amazon terminal and update all currently installed packages.
-
-	$ sudo apt-get update
-	$ sudo apt-get updrade
-	
+```
+$ sudo apt-get update
+$ sudo apt-get updrade
+```
 Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 	
 	$ sudo nano /home/your_username/.ssh/ssh_config
 		
 Configure the Uncomplicated Firewall (UFW) to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
-	
-	$ ufw allow 2200/tcp
-	$ ufw allow 80/tcp
-	$ ufw allow 123/tcp
-	$ ufw enable	
-		
+```	
+$ ufw allow 2200/tcp
+$ ufw allow 80/tcp
+$ ufw allow 123/tcp
+$ ufw enable	
+```		
 > *Warning*: When changing the SSH port, make sure that the firewall is open for port 2200 first, so that you don't lock yourself out of the server. 
 > When you change the SSH port, the Lightsail instance will no longer be accessible through the web app 'Connect using SSH' button. 
 > The button assumes the default port is being used. There are instructions on the same page for connecting from your terminal to the instance. 
@@ -103,12 +103,12 @@ Connect to grader user.
 	$ sudo su -grader
 	
 Create an SSH key pair for grader and secure it.
-
-	$ mkdir .ssh
-	$ chmod 700 .ssh
-	$ touch .ssh/authorized_keys
-	$ chmod 600 .ssh/authorized_keys
-	
+```
+$ mkdir .ssh
+$ chmod 700 .ssh
+$ touch .ssh/authorized_keys
+$ chmod 600 .ssh/authorized_keys
+```
 Open authorized_keys
 
 	$ sudo nano .ssh/authorized_keys
@@ -158,10 +158,10 @@ Configure remote access to postgres.
 	$ sudo nano /etc/postgresql/9.5/pg-hba.conf
 	
 Add database user (role).
-
-	$ sudo su -postgres
-	$ create user catalog with password catalog;
-	
+```
+$ sudo su -postgres
+$ create user catalog with password catalog;
+```	
 Check existing roles.
 
 	$ postgres@35.159.1.90:~$ psql
@@ -178,9 +178,10 @@ To connect to DB type
 Press `q` to disconnect.
 
 Only let catalog permission to create tables.
-	
-	postgres=# REVOKE ALL ON SCHEMA catalog FROM public;
-	postgres=# GRANT ALL ON SCHEMA public TO catalog;
+```	
+postgres=# REVOKE ALL ON SCHEMA catalog FROM public;
+postgres=# GRANT ALL ON SCHEMA public TO catalog;
+```
 	
 ## 3. Install [GIT](https://github.com/) on server
 
@@ -199,10 +200,10 @@ Create folder for git catalog.
 	$ sudo mkdir catalog
 	
 Clone repository.
-
-	$ cd /var/www/catalog
-	$ sudo git clone https://github.com/your_git_username/repo_name.git catalog
-
+```
+$ cd /var/www/catalog
+$ sudo git clone https://github.com/your_git_username/repo_name.git catalog
+```
 Create `__init__.py` that will contain the [Flask](http://flask.pocoo.org/) app logic.
 
 	$ sudo nano $ cd /var/www/catalog/catalog __init__.py
@@ -212,7 +213,6 @@ Make `git` unaccessable from browser. In your git folder create `.htaccess` file
 	$ sudo nano .htaccess
 
 Save it with:
-
 ```
 Order allow, deny
 Deny from all
@@ -242,7 +242,7 @@ Enable mod-wsgi
 
 	$ sudo a2enmod wsgi
 	
-## 5. Install Flask
+## 5. Setup Virtual Environment
 
 Install pip.
 
@@ -258,17 +258,17 @@ Install virtual environment.
 	
 Create virtual environment in the last catalog folder.
 	
-	$ sudo virutalenv catalogenv
+	$ sudo virtualenv catalogenv
 	
 Activate the environment.
 
 	$ source catalog/bin/activate
 	
-Install Flask.
+Install [Flask](http://flask.pocoo.org/).
 
-	$ sudo pip install Glask
+	$ sudo pip install Flask
 	
-Test your installtion.
+Test your installation.
 
 	$ sudo python __init__.py
 	
@@ -314,7 +314,6 @@ Create .wsgi file in app directory.
 	$ sudo nano catalog .wsgi
 	
 Add the following:
-
 ```
 #!/usr/bin/python
 import system
@@ -324,7 +323,6 @@ sys.path.insert(0,"/var/www/catalog/")
 from catalog import app as application
 application.secret_key = 'your_secret_ key'
 ```
-
 Restart Apache.
 
 	$ sudo service apache2 restart
@@ -348,6 +346,34 @@ Install [SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.1/)
 Install [requests](http://docs.python-requests.org/en/master/)
 
 	$ pip install requests
+	
+Install [werkzeug](http://werkzeug.pocoo.org/)(globally) and complete the setup for virtualenv
+```	
+$ pip install werkzeug=0.8.3 
+$ pip install flask==0.90
+$ pip install Flask-Login==0.1.3
+$ pip install oath2client
+$ sudo apt-get install python-psycopg2
+```	
+Change create engine command in your database setup.py file to:
+
+> engine = create_engine('postgresql://user:password@localhost/catalog')
+
+Run the database setup file.
+
+	$ python bikesdatabase.py
+
+To read apache errors run:
+
+	$ sudo less /var/log/apache2/error.log
+	
+Clear the log
+
+	$ sudo bash -c 'echo>/var/log/apache2/error.log'
+	
+If you have an error with `clients_secrets.json` file, give a full path to it in your python file.
+
+Change string formatting of the URLs (write in one line) in you .py files if you see the formatting error.
 
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
