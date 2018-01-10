@@ -127,6 +127,22 @@ Now you can connect to the server as grader user.
 	
 Press `CTRL + D` to close connection.
 
+Disable `root` login. Open new terminal so you don't lock up yourself and connect to server.
+
+	$ sudo nano /etc/ssh/sshd_config
+
+Change 
+```
+#  PermitRootLogin yes
+```
+to
+```
+# PermitRootLogin no
+```
+Restart ssh service
+
+	$ sudo service ssh restart
+
 Set your machine to UTC.
 
 	$ sudo timedatectl set-timezone UTC
