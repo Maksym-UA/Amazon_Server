@@ -49,6 +49,19 @@ Connect to your server via Amazon terminal and update all currently installed pa
 $ sudo apt-get update
 $ sudo apt-get updrade
 ```
+
+Setup automatic updates
+
+	$ sudo apt install unattended-upgrades
+
+To enable automatic updates, edit /etc/apt/apt.conf.d/20auto-upgrades and set the appropriate apt configuration options:
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+```
+
 Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 	
 	$ sudo nano /home/your_username/.ssh/ssh_config
@@ -140,8 +153,13 @@ to
 # PermitRootLogin no
 ```
 Restart ssh service
-
-	$ sudo service ssh restart
+```
+$ sudo service ssh restart 
+```
+or 
+```
+$ /etc/init.d/ssh restart
+```
 
 Set your machine to UTC.
 
