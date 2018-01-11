@@ -101,7 +101,7 @@ Read content on local machine and copy it.
 	
 Connect to the server from your terminal.
 	
-	$ ssh -i ~/.ssh/key -p2200 ubuntu@35.159.1.90
+	$ ssh -i ~/.ssh/key -p2200 ubuntu@18.196.38.188
 	
 Create a new user account named `grader`.
 
@@ -136,7 +136,7 @@ Press `CTRL + D` to exit `grader` user.
 
 Now you can connect to the server as grader user.
 
-	$ ssh -i ~/.ssh/key.pem -p2200 grader@35.159.1.90
+	$ ssh -i ~/.ssh/key.pem -p2200 grader@18.196.38.188
 	
 Press `CTRL + D` to close connection.
 
@@ -198,7 +198,7 @@ $ create user catalog with password catalog;
 ```	
 Check existing roles.
 
-	$ postgres@35.159.1.90:~$ psql
+	$ postgres@18.196.38.188:~$ psql
 	postgres=# \du
 
 Create database.
@@ -316,7 +316,7 @@ Deactivate the environment.
 	
 Configure and enable Virtual Host
 
-	$ sudo nano /etc/apache2/sites_available/catalog.conf
+	$ sudo nano /etc/apache2/sites-available/catalog.conf
 
 Add the following:
 ```
