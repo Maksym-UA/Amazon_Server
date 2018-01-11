@@ -451,7 +451,7 @@ Uncomment `tmpldir` line and localhost.localdomain should be updated to display 
 tmpldir /etc/munin/templates
 
 
-[MuninMonitor]
+[CatalogMuninMonitor]
     address 127.0.0.1
     use_node_name yes
 ```
