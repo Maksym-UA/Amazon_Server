@@ -452,7 +452,7 @@ tmpldir /etc/munin/templates
 
 
 [CatalogMuninMonitor]
-    address 127.0.0.1
+    address 18.196.38.188
     use_node_name yes
 ```
 
@@ -466,10 +466,12 @@ Change the beginning of this file to reflect this information:
 ```
 Alias /munin /var/www/munin
 <Directory /var/www/munin>
-	Order allow,deny
+	#Order allow,deny
 	#Allow from localhost 127.0.0.0/8  ::1
-	Allow from all
-	Options None
+	#Allow from all
+	#Options None
+	Require all granted
+        Options FollowSymLinks SymLinksIfOwnerMatch
 ```
 Create the directory path that you referenced in the munin.conf file and modify the ownership to allow munin to write to it
 
