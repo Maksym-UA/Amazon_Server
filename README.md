@@ -427,6 +427,65 @@ Install Munin
 
 	$ sudo apt-get install munin
 
+Open configuration file
+
+	sudo nano /etc/munin/munin.conf
+	
+Change
+```
+# dbdir /var/lib/munin
+# htmldir /var/cache/munin/www
+# logdir /var/log/munin
+# rundir  /var/run/munin
+```
+to
+```
+dbdir /var/lib/munin
+htmldir /var/www/munin
+logdir /var/log/munin
+rundir  /var/run/munin
+```
+
+Uncomment `tmpldir` line and localhost.localdomain should be updated to display the hostname, domain name
+```
+tmpldir /etc/munin/templates
+
+
+[MuninMonitor]
+    address 127.0.0.1
+    use_node_name yes
+```
+
+Save the file and exit.
+
+Open Munin Apache configuration.
+
+	$ sudo nano /etc/munin/apache.conf
+
+Change the beginning of this file to reflect this information:
+```
+Alias /munin /var/www/munin
+<Directory /var/www/munin>
+	Order allow,deny
+	#Allow from localhost 127.0.0.0/8  ::1
+	Allow from all
+	Options None
+```
+Create the directory path that you referenced in the munin.conf file and modify the ownership to allow munin to write to it
+
+	$ sudo mkdir /var/www/munin
+	$ sudo chown munin:munin /var/www/munin
+	
+Restart apache and munin.
+
+	$ sudo service munin-node restart
+	$ sudo service apache2 restart
+	
+After about five minutes, your files should be created and you will be able to access your data. You should be able to access your munin details at:
+```
+your_ip_address/munin
+```
+
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
 
