@@ -413,6 +413,20 @@ If you have an error with `clients_secrets.json` file, give a full path to it in
 
 Change string formatting of the URLs (write in one line) in you .py files if you see the formatting error.
 
+## 6. Configure [Munin](http://munin-monitoring.org/) monitoring tool
+
+Check your Apache version
+
+	$ apache2 -–v
+
+If it is not yet installed, you can go ahead and install it:
+
+	$ sudo apt-get install apache2
+	
+Install Munin
+
+	$ sudo apt-get install munin
+
 ### That's it you are ready to go! Feel free to make any changes to the provided code.
 
 
