@@ -74,7 +74,7 @@ $ ufw allow 123/tcp
 ```
 Deny connections on port 22
 ```
-$ ufw deny 22
+$ ufw deny 22/tcp
 $ ufw enable	
 ```		
 > *Warning*: When changing the SSH port, make sure that the firewall is open for port 2200 first, so that you don't lock yourself out of the server. 
