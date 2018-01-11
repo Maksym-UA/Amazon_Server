@@ -101,7 +101,7 @@ Read content on local machine and copy it.
 	
 Connect to the server from your terminal.
 	
-	$ ssh -i ~/.ssh/key.pem -p2200 ubuntu@35.159.1.90
+	$ ssh -i ~/.ssh/key -p2200 ubuntu@35.159.1.90
 	
 Create a new user account named `grader`.
 
