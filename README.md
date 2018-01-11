@@ -4,7 +4,7 @@
 
 This project teaches you to secure and set up a Linux server. 
 The project is running on [Amazon Lightsail](https://portal.aws.amazon.com/billing/signup). 
-Currently the app is running on [http://35.159.1.90/](http://35.159.1.90/).
+Currently the app is running on [http://18.196.38.188/](http://18.196.38.188/).
 
 
 ## Setup Amazon Lightsail instance
